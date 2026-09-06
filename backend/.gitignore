@@ -52,5 +52,8 @@ env/
 ENV/
 docker-compose.override.yml
 .env
+.env.example
+.env
 .env.local
-
+.env.production
+.env.*.local
