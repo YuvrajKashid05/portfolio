@@ -5,17 +5,30 @@
 :root {
   --bg-primary: #111113;
   --bg-surface: #18181b;
-  --accent-orange: #FF5500;
-  --hero-gradient-start: #FF6B35;
-  --hero-gradient-end: #A32A17;
-  --text-primary: #FFFFFF;
-  --text-secondary: #A1A1AA;
+  --accent-orange: #ff5500;
+  --hero-gradient-start: #ff6b35;
+  --hero-gradient-end: #a32a17;
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+}
+
+html {
+  background-color: #111113;
+  scroll-behavior: smooth;
 }
 
 body {
   background-color: #111113;
-  color: #FFFFFF;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Okygen, Ubuntu, Cantarell, sans-serif;
+  color: #ffffff;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    sans-serif;
   overflow-x: hidden;
 }
 
@@ -38,5 +51,5 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF5500;
+  background: #ff5500;
 }

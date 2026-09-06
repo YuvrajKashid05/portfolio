@@ -1,16 +1,27 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Mail, MessageSquare, Send, CheckCircle2, AlertCircle, Loader2, MapPin, Sparkles } from 'lucide-react';
-import { z } from 'zod';
-import { api, Profile } from '@/lib/api';
+import { api, Profile } from "@/lib/api";
+import { motion } from "framer-motion";
+import {
+  AlertCircle,
+  CheckCircle2,
+  Loader2,
+  Mail,
+  MapPin,
+  MessageSquare,
+  Send,
+} from "lucide-react";
+import React, { useState } from "react";
+import { z } from "zod";
 
 const contactFormSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters').max(100),
-  email: z.string().email('Please enter a valid email address'),
+  name: z.string().min(2, "Name must be at least 2 characters").max(100),
+  email: z.string().email("Please enter a valid email address"),
   subject: z.string().max(150).optional(),
-  message: z.string().min(10, 'Message must be at least 10 characters').max(3000),
+  message: z
+    .string()
+    .min(10, "Message must be at least 10 characters")
+    .max(3000),
   website: z.string().max(0).optional(), // Honeypot
 });
 
@@ -22,11 +33,11 @@ interface ContactSectionProps {
 
 export default function ContactSection({ profile }: ContactSectionProps) {
   const [formData, setFormData] = useState<ContactFormData>({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-    website: '',
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+    website: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -34,10 +45,12 @@ export default function ContactSection({ profile }: ContactSectionProps) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     if (errors[e.target.name]) {
-      setErrors((prev) => ({ ...prev, [e.target.name]: '' }));
+      setErrors((prev) => ({ ...prev, [e.target.name]: "" }));
     }
     setServerError(null);
   };
@@ -63,16 +76,28 @@ export default function ContactSection({ profile }: ContactSectionProps) {
       setIsSubmitting(true);
       await api.submitContact(formData);
       setIsSuccess(true);
-      setFormData({ name: '', email: '', subject: '', message: '', website: '' });
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+        website: "",
+      });
     } catch (err: any) {
-      setServerError(err?.message || 'Failed to submit inquiry. Please try again or reach out directly via email.');
+      setServerError(
+        err?.message ||
+          "Failed to submit inquiry. Please try again or reach out directly via email.",
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <section id="contact" className="py-24 max-w-7xl mx-auto px-6 sm:px-8 relative">
+    <section
+      id="contact"
+      className="py-24 max-w-7xl mx-auto px-6 sm:px-8 relative"
+    >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         {/* Left Column: Direct Info */}
         <div className="lg:col-span-5 space-y-6">
@@ -85,7 +110,9 @@ export default function ContactSection({ profile }: ContactSectionProps) {
           </h2>
 
           <p className="text-sm sm:text-base text-[#A1A1AA] leading-relaxed">
-            Whether you need a senior full-stack architect to build a greenfield MVP, optimize low-latency database queries, or build fluid React Native apps, let?s talk.
+            Whether you need a senior full-stack architect to build a greenfield
+            MVP, optimize low-latency database queries, or build fluid React
+            Native apps, let?s talk.
           </p>
 
           <div className="pt-4 space-y-4 text-sm text-[#A1A1AA]">
@@ -94,12 +121,14 @@ export default function ContactSection({ profile }: ContactSectionProps) {
                 <Mail className="w-4 h-4" />
               </div>
               <div>
-                <span className="block text-xs text-[#A1A1AA]">Direct Email</span>
+                <span className="block text-xs text-[#A1A1AA]">
+                  Direct Email
+                </span>
                 <a
                   href="mailto:contact@portfolio.dev"
                   className="text-white font-medium hover:text-[#FF5500] transition-colors"
                 >
-                  contact@portfolio.dev
+                  raj.kashid36@gmail.com
                 </a>
               </div>
             </div>
@@ -109,8 +138,12 @@ export default function ContactSection({ profile }: ContactSectionProps) {
                 <MapPin className="w-4 h-4" />
               </div>
               <div>
-                <span className="block text-xs text-[#A1A1AA]">Location & Availability</span>
-                <span className="text-white font-medium">Worldwide (Remote) ? Full-Time & Advisory</span>
+                <span className="block text-xs text-[#A1A1AA]">
+                  Location & Availability
+                </span>
+                <span className="text-white font-medium">
+                  Worldwide (Remote) ? Full-Time & Advisory
+                </span>
               </div>
             </div>
           </div>
@@ -131,9 +164,12 @@ export default function ContactSection({ profile }: ContactSectionProps) {
               >
                 <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-sm font-bold text-white mb-1">Message Received!</h4>
+                  <h4 className="text-sm font-bold text-white mb-1">
+                    Message Received!
+                  </h4>
                   <p className="text-xs text-emerald-300 leading-relaxed">
-                    Thank you for reaching out. I have received your message and will respond within 24 hours.
+                    Thank you for reaching out. I have received your message and
+                    will respond within 24 hours.
                   </p>
                   <button
                     onClick={() => setIsSuccess(false)}
@@ -179,11 +215,13 @@ export default function ContactSection({ profile }: ContactSectionProps) {
                     disabled={isSubmitting}
                     className={`w-full px-4 py-3 rounded-xl bg-[#111113] border text-white text-sm focus:outline-none transition-colors ${
                       errors.name
-                        ? 'border-red-500/80 focus:border-red-500'
-                        : 'border-white/10 focus:border-[#FF5500]'
+                        ? "border-red-500/80 focus:border-red-500"
+                        : "border-white/10 focus:border-[#FF5500]"
                     }`}
                   />
-                  {errors.name && <p className="mt-1.5 text-xs text-red-400">{errors.name}</p>}
+                  {errors.name && (
+                    <p className="mt-1.5 text-xs text-red-400">{errors.name}</p>
+                  )}
                 </div>
 
                 <div>
@@ -199,11 +237,15 @@ export default function ContactSection({ profile }: ContactSectionProps) {
                     disabled={isSubmitting}
                     className={`w-full px-4 py-3 rounded-xl bg-[#111113] border text-white text-sm focus:outline-none transition-colors ${
                       errors.email
-                        ? 'border-red-500/80 focus:border-red-500'
-                        : 'border-white/10 focus:border-[#FF5500]'
+                        ? "border-red-500/80 focus:border-red-500"
+                        : "border-white/10 focus:border-[#FF5500]"
                     }`}
                   />
-                  {errors.email && <p className="mt-1.5 text-xs text-red-400">{errors.email}</p>}
+                  {errors.email && (
+                    <p className="mt-1.5 text-xs text-red-400">
+                      {errors.email}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -224,7 +266,8 @@ export default function ContactSection({ profile }: ContactSectionProps) {
 
               <div>
                 <label className="block text-xs font-medium text-[#A1A1AA] mb-2">
-                  Project Details / Message <span className="text-[#FF5500]">*</span>
+                  Project Details / Message{" "}
+                  <span className="text-[#FF5500]">*</span>
                 </label>
                 <textarea
                   name="message"
@@ -235,11 +278,15 @@ export default function ContactSection({ profile }: ContactSectionProps) {
                   disabled={isSubmitting}
                   className={`w-full px-4 py-3 rounded-xl bg-[#111113] border text-white text-sm focus:outline-none transition-colors resize-none ${
                     errors.message
-                      ? 'border-red-500/80 focus:border-red-500'
-                      : 'border-white/10 focus:border-[#FF5500]'
+                      ? "border-red-500/80 focus:border-red-500"
+                      : "border-white/10 focus:border-[#FF5500]"
                   }`}
                 />
-                {errors.message && <p className="mt-1.5 text-xs text-red-400">{errors.message}</p>}
+                {errors.message && (
+                  <p className="mt-1.5 text-xs text-red-400">
+                    {errors.message}
+                  </p>
+                )}
               </div>
 
               <button
@@ -249,7 +296,8 @@ export default function ContactSection({ profile }: ContactSectionProps) {
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" /> Transmitting Message...
+                    <Loader2 className="w-4 h-4 animate-spin" /> Transmitting
+                    Message...
                   </>
                 ) : (
                   <>
