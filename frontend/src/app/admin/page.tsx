@@ -277,8 +277,9 @@ export default function AdminDashboardPage() {
                             src={p.thumbnailUrl}
                             alt={p.title}
                             fill
+                            sizes="64px"
                             className="object-cover"
-                          />
+                          />{" "}
                         </div>
                       </td>
                       <td className="p-4">
