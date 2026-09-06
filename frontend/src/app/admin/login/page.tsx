@@ -1,15 +1,22 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { Shield, Lock, Mail, Loader2, ArrowLeft, AlertCircle } from 'lucide-react';
-import { api } from '@/lib/api';
+import { api } from "@/lib/api";
+import {
+  AlertCircle,
+  ArrowLeft,
+  Loader2,
+  Lock,
+  Mail,
+  Shield,
+} from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,11 +28,11 @@ export default function AdminLoginPage() {
     try {
       const data = await api.login({ email, password });
       if (data.token) {
-        localStorage.setItem('portfolio_token', data.token);
-        router.push('/admin');
+        localStorage.setItem("portfolio_token", data.token);
+        router.push("/admin");
       }
     } catch (err: any) {
-      setError(err?.message || 'Invalid administrator credentials');
+      setError(err?.message || "Invalid administrator credentials");
     } finally {
       setIsLoading(false);
     }
@@ -52,8 +59,12 @@ export default function AdminLoginPage() {
               <Shield className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-white tracking-tight">Admin Console</h2>
-              <p className="text-xs text-[#A1A1AA]">Manage projects, skills, and contacts</p>
+              <h2 className="text-xl font-bold text-white tracking-tight">
+                Admin Console
+              </h2>
+              <p className="text-xs text-[#A1A1AA]">
+                Manage projects, skills, and contacts
+              </p>
             </div>
           </div>
 
@@ -111,17 +122,10 @@ export default function AdminLoginPage() {
                   <Loader2 className="w-4 h-4 animate-spin" /> Verifying...
                 </>
               ) : (
-                'Authenticate'
+                "Authenticate"
               )}
             </button>
           </form>
-
-          {/* Seed credentials hint */}
-          <div className="mt-6 pt-5 border-t border-white/5 text-[11px] text-[#A1A1AA] text-center">
-            Seeded test credentials: <br />
-            <code className="text-white font-mono bg-white/5 px-1.5 py-0.5 rounded">admin@portfolio.dev</code> /{' '}
-            <code className="text-white font-mono bg-white/5 px-1.5 py-0.5 rounded">AdminSecretPass123!</code>
-          </div>
         </div>
       </div>
     </div>
